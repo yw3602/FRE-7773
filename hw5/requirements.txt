@@ -1,0 +1,9 @@
+jupyterlab>=3,<4
+matplotlib>=3,<4
+numpy>=1,<2
+pandas>=1,<2
+scikit-learn>=1,<2
+metaflow==2.5.0
+streamlit==1.10.0
+flask==2.0.2
+comet-ml==3.31.16
