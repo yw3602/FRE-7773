@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cost predictor</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+	<h1><CENTER>Customer Acquisition Cost Predictor</CENTER></h1>
+	<form id="myform" method="POST">
+		<b>Promotion Infomation</b><br>
+		<label>Promotion Types</label><br>
+		<input id="promotion_name" name = "promotion_name" type="text" list="typelist1" placeholder="choose from">
+		<datalist id="typelist1">
+			<option>Bag Stuffers</option>
+			<option>Best Savings</option>
+			<option>Big Promo</option>
+			<option>Big Time Discounts</option>
+			<option>Big Time Savings</option>
+			<option>Bye Bye Baby</option>
+			<option>Cash Register Lottery</option>
+			<option>Coupon Spectacular</option>
+			<option>Dimes Off</option>
+			<option>Dollar Cutters</option>
+			<option>Dollar Days</option>
+			<option>Double Down Sale</option>
+			<option>Double Your Savings</option>
+			<option>Fantastic Discounts</option>
+			<option>Free For All</option>
+			<option>Go For It</option>
+			<option>Green Light Days</option>
+			<option>Green Light Special</option>
+			<option>High Roller Savings</option>
+			<option>I Cant Believe It Sale</option>
+			<option>Money Savers</option>
+			<option>Mystery Sale</option>
+			<option>One Day Sale</option>
+			<option>Pick Your Savings</option>
+			<option>Price Cutters</option>
+			<option>Price Destroyers</option>
+			<option>Price Savers</option>
+			<option>Price Slashers</option>
+			<option>Price Smashers</option>
+			<option>Price Winners</option>
+			<option>Sale Winners</option>
+			<option>Sales Days</option>
+			<option>Sales Galore</option>
+			<option>Save-It Sale</option>
+			<option>Saving Days</option>
+			<option>Savings Galore</option>
+			<option>Shelf Clearing Days</option>
+			<option>Shelf Emptiers</option>
+			<option>Super Duper Savers</option>
+			<option>Super Savers</option>
+			<option>Super Wallet Savers</option>
+			<option>Three for One</option>
+			<option>Tip Top Savings</option>
+			<option>Two Day Sale</option>
+			<option>Two for One</option>
+			<option>Unbeatable Price Savers</option>
+			<option>Wallet Savers</option>
+			<option>Weekend Markdown</option>
+			<option>You Save Days</option>
+		</datalist><br>
+		<label>Media Type</label><br>
+		<input id="media_type" name = "media_type" type="text" list="typelist2" placeholder="choose from">
+		<datalist id="typelist2">
+			<option>Bulk Mail</option>
+			<option>Cash Register Handout</option>
+			<option>Daily Paper</option>
+			<option>Daily Paper, Radio</option>
+			<option>Daily Paper, Radio, TV</option>
+			<option>In-Store Coupon</option>
+			<option>Product Attachment</option>
+			<option>Radio</option>
+			<option>Street Handout</option>
+			<option>Sunday Paper</option>
+			<option>Sunday Paper, Radio</option>
+			<option>Sunday Paper, Radio, TV</option>
+			<option>TV</option>
+		</datalist><br>
+
+		<br>
+		<b>Basic Customer Info</b><br>
+		<label>Gender</label><br>
+		<input id="gender" name = "gender" type="object" list="typelist" placeholder="choose from">
+		<datalist id="typelist">
+			<option>Female</option>
+			<option>Male</option>
+		</datalist><br>
+
+		<br>
+		<b>Store Info</b><br>
+		<label>Frozen section size</label><br>
+		<input id="frozen_sqft" name = "frozen_sqft" type="object" placeholder="enter SQFT"><br>
+
+		<label>Meat section size</label><br>
+		<input id="meat_sqft" name = "meat_sqft" type="object" placeholder="enter SQFT"><br>
+		
+		<label>Have coffee bar</label><br>
+		<input id="coffee_bar" name = "coffee_bar" type="object" list="typelist3" placeholder="enter Yes/No"><br>
+
+		<label>Have Video store</label><br>
+		<input id="video_store" name = "video_store" type="object" list="typelist3" placeholder="enter Yes/No"><br>
+		
+		<label>Have salad bar</label><br>
+		<input id="salad_bar	" name = "salad_bar" type="object" list="typelist3" placeholder="enter Yes/No"><br>
+		
+		<label>Have prepared food</label><br>
+		<input id="prepared_food" name = "prepared_food" type="object" list="typelist3" placeholder="enter Yes/No"><br>
+
+		<label>Have florist</label><br>
+		<input id="florist" name = "florist" type="object" list="typelist3" placeholder="enter Yes/No"><br>
+		<datalist id="typelist3">
+			<option>Yes</option>
+			<option>No</option>
+		</datalist><br>
+	</form>
+	<button id="predict">Predict</button>
+	<h2 id="result"></h2>
+	<script type="text/javascript">
+		$(function() {
+		$('#predict').click(function() {
+			event.preventDefault();
+			var form_data = new FormData($('#myform')[0]);
+			var object = {};
+			form_data.forEach((value, key) => object[key] = value);
+			var request = JSON.stringify(
+					{
+						"features": object
+					}
+			);
+			console.log(request);
+			$.ajax({
+				type: 'POST',
+				url: '/predict',
+				data: request,
+				contentType: false,
+				processData: false,
+			}).done(function(data, textStatus, jqXHR){
+				$('#result').text(data);
+			}).fail(function(data){
+				alert('error!');
+			});
+		});
+		});
+		</script>
+
+
+</body>
+</html>
